@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+# Part of Zato - Open-source ESB, SOA, REST, APIs and Cloud Integrations in Python
+# https://zato.io
+
+from zato.enclog.enclog import cli_main
+cli_main()
