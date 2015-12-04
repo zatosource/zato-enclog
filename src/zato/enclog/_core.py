@@ -22,6 +22,9 @@ import click
 # cryptography
 from cryptography.fernet import Fernet, InvalidToken
 
+# future
+from builtins import bytes
+
 # Tailer
 from tailer import follow
 
@@ -43,7 +46,10 @@ class EncryptedLogFormatter(Formatter):
         return super(EncryptedLogFormatter, self).__init__(*args, **kwargs)
 
     def format(self, record):
-        record.msg = '{}{}'.format(log_prefix, self.fernet.encrypt(record.getMessage()))
+        msg = record.getMessage()
+        if not isinstance(msg, bytes):
+            msg = msg.encode('utf8')
+        record.msg = '{}{}'.format(log_prefix, self.fernet.encrypt(msg).decode('utf8'))
         return super(EncryptedLogFormatter, self).format(record)
 
 # ################################################################################################################################

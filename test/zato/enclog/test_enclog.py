@@ -19,8 +19,15 @@ from uuid import uuid4
 # cryptography
 from cryptography.fernet import Fernet
 
+# future
+from builtins import bytes
+
+# testfixtures
+from testfixtures import LogCapture
+
 # Zato
 from zato.enclog import EncryptedLogFormatter, genkey
+from zato.enclog._core import log_prefix
 
 class CryptoTestCase(TestCase):
     def test_genkey(self):
@@ -28,7 +35,7 @@ class CryptoTestCase(TestCase):
         Fernet(key) # Must not raise an exception otherwise we've generated an invalid key
 
     def test_crypto_round_trip(self):
-        clear_text = uuid4().hex
+        clear_text = uuid4().hex.encode('utf8')
         key = genkey()
         fernet = Fernet(key)
         encrypted = fernet.encrypt(clear_text)
@@ -37,19 +44,35 @@ class CryptoTestCase(TestCase):
         self.assertEquals(clear_text, decrypted)
 
 class FormatterTestCase(TestCase):
+
     def test_formatter(self):
 
-        level = logging.INFO
-        format = '%(levelname)s - %(message)s'
+            for prefix in ['®®®', 'abc']:
 
-        key = genkey()
-        formatter = EncryptedLogFormatter(key, format)
+                with LogCapture() as lc:
 
-        handler = logging.StreamHandler()
-        handler.setFormatter(formatter)
+                    data = '{}{}'.format(prefix, uuid4().hex)
+                    key = genkey()
+                    fernet = Fernet(key)
 
-        logger = logging.getLogger('')
-        logger.addHandler(handler)
-        logger.setLevel(level)
+                    level = logging.INFO
+                    format = '%(levelname)s - %(message)s'
+                    formatter = EncryptedLogFormatter(key, format)
 
-        logger.info(b'{"user":"Jane Xi"}')
+                    handler = logging.StreamHandler()
+                    handler.setFormatter(formatter)
+
+                    logger = logging.getLogger('')
+                    logger.addHandler(handler)
+                    logger.setLevel(level)
+
+                    logger.info(data)
+
+                    encrypted = list(lc.records)[0].msg
+                    encrypted = encrypted.split(log_prefix)[1].encode('utf8')
+                    decrypted = fernet.decrypt(encrypted).decode('utf8')
+
+                    if isinstance(data, bytes):
+                        data = data.decode('utf8')
+
+                    self.assertEquals(data, decrypted)

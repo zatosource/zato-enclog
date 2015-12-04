@@ -11,7 +11,7 @@ Licensed under LGPLv3, see LICENSE.txt for terms and conditions.
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import os
+import os, sys
 from setuptools import setup, find_packages
 
 version = '1.0'
@@ -50,7 +50,9 @@ INFO - gAAAAABWYa17oiDoSMVjF8JM9DWzB3dtEvenW9laKqgsFl4d4ksbLCkoJzTyrI3nXKYVOcC03
 
 def parse_requirements(requirements):
     with open(requirements) as f:
-        return [line.strip('\n') for line in f if line.strip('\n') and not line.startswith('#')]
+        return [line.strip('\n') for line in f if line.strip('\n') and not line[0] in ('#', '-')]
+
+package_dir = b'src' if sys.version_info.major == 2 else 'src'
 
 setup(
       name = 'zato-enclog',
@@ -66,10 +68,11 @@ setup(
       platforms = ['OS Independent'],
       license = 'BSD License',
 
-      package_dir = {'':b'src'},
-      packages = find_packages(b'src'),
+      package_dir = {'':package_dir},
+      packages = find_packages('src'),
 
-      namespace_packages = [b'zato'],
+      namespace_packages = ['zato'],
+      dependency_links = ['git+https://github.com/six8/pytailer.git#egg=tailer'],
       install_requires = parse_requirements(
           os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirements.txt')),
 

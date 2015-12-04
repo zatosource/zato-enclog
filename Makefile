@@ -4,10 +4,17 @@
 ENV_NAME=enclog-env
 BIN_DIR=$(CURDIR)/$(ENV_NAME)/bin
 
-default: install
+default: test
 
-install:
-	virtualenv $(CURDIR)/$(ENV_NAME)
+install2:
+	virtualenv -p python2.7 $(CURDIR)/$(ENV_NAME)
+	$(MAKE) _install
+
+install3:
+	virtualenv -p python3 $(CURDIR)/$(ENV_NAME)
+	$(MAKE) _install
+
+_install:
 	$(BIN_DIR)/pip install -r $(CURDIR)/requirements.txt
 	$(BIN_DIR)/python $(CURDIR)/setup.py develop
 	$(BIN_DIR)/pip install -e $(CURDIR)/.
@@ -20,6 +27,17 @@ clean:
 	find $(CURDIR) -name '*.pyc' -exec rm {} \;
 
 test:
-	$(MAKE) install
-	$(BIN_DIR)/nosetests $(CURDIR)/test/zato/enclog --with-coverage --cover-package=zato.enclog --nocapture
-	$(BIN_DIR)/flake8 $(CURDIR)/src/zato/enclog --count
+	$(MAKE) clean
+	$(MAKE) install2
+	$(MAKE) _test
+	$(MAKE) clean
+	$(MAKE) install3
+	$(MAKE) _test
+
+_test:
+	$(BIN_DIR)/nosetests $(CURDIR)/test/zato/enclog/* --with-coverage --cover-tests --cover-erase --cover-package=zato --nocapture
+	$(MAKE) flake8
+
+flake8:
+	$(BIN_DIR)/flake8 $(CURDIR)/src --count
+	$(BIN_DIR)/flake8 $(CURDIR)/test --count
