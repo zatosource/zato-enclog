@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function
 """
 Copyright (C) 2015 Dariusz Suchojad <dsuch at zato.io>
 
-Licensed under LGPLv3, see LICENSE.txt for terms and conditions.
+Licensed under BSD, see LICENSE.txt for terms and conditions.
 """
 
 # Part of Zato - Open-source ESB, SOA, REST, APIs and Cloud Integrations in Python
@@ -64,7 +64,7 @@ def _open(ctx, path, key, needs_tailf=False):
             sys.stdout.write('{}{}\n'.format(prefix, fernet.decrypt(encrypted)))
             sys.stdout.flush()
         except InvalidToken:
-            sys.stderr.write('Invalid Fernet key\n')
+            sys.stderr.write('Invalid crypto key\n')
             sys.exit(1)
 
 # ################################################################################################################################

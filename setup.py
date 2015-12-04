@@ -64,7 +64,7 @@ setup(
       description = 'Encrypted logger reusable in any Python application',
       long_description = LONG_DESCRIPTION,
       platforms = ['OS Independent'],
-      license = 'Python Software Foundation License',
+      license = 'BSD License',
 
       package_dir = {'':b'src'},
       packages = find_packages(b'src'),
@@ -82,7 +82,7 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'Intended Audience :: Other Audience',
-        'License :: OSI Approved :: Python Software Foundation License',
+        'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',

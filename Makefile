@@ -21,4 +21,5 @@ clean:
 
 test:
 	$(MAKE) install
+	$(BIN_DIR)/nosetests $(CURDIR)/test/zato/enclog --with-coverage --cover-package=zato.enclog --nocapture
 	$(BIN_DIR)/flake8 $(CURDIR)/src/zato/enclog --count
