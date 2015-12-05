@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 """
 Copyright (C) 2015 Dariusz Suchojad <dsuch at zato.io>
@@ -18,9 +18,6 @@ from uuid import uuid4
 
 # cryptography
 from cryptography.fernet import Fernet
-
-# future
-from builtins import bytes
 
 # testfixtures
 from testfixtures import LogCapture
@@ -47,7 +44,7 @@ class FormatterTestCase(TestCase):
 
     def test_formatter(self):
 
-            for prefix in ['®®®', 'abc']:
+            for prefix in ['±±±', 'abc']:
 
                 with LogCapture() as lc:
 
@@ -69,10 +66,7 @@ class FormatterTestCase(TestCase):
                     logger.info(data)
 
                     encrypted = list(lc.records)[0].msg
-                    encrypted = encrypted.split(log_prefix)[1].encode('utf8')
-                    decrypted = fernet.decrypt(encrypted).decode('utf8')
-
-                    if isinstance(data, bytes):
-                        data = data.decode('utf8')
+                    encrypted = encrypted.split(log_prefix)[1]
+                    decrypted = fernet.decrypt(encrypted.encode('utf8')).decode('utf8')
 
                     self.assertEquals(data, decrypted)

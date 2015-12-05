@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 """
 Copyright (C) 2015 Dariusz Suchojad <dsuch at zato.io>
@@ -18,12 +18,13 @@ from logging import getLogger, Formatter
 
 # click
 import click
+click.disable_unicode_literals_warning = True
 
 # cryptography
 from cryptography.fernet import Fernet, InvalidToken
 
 # future
-from builtins import bytes
+from builtins import str
 
 # Tailer
 from tailer import follow
@@ -47,7 +48,7 @@ class EncryptedLogFormatter(Formatter):
 
     def format(self, record):
         msg = record.getMessage()
-        if not isinstance(msg, bytes):
+        if isinstance(msg, str):
             msg = msg.encode('utf8')
         record.msg = '{}{}'.format(log_prefix, self.fernet.encrypt(msg).decode('utf8'))
         return super(EncryptedLogFormatter, self).format(record)
@@ -67,7 +68,10 @@ def _open(ctx, path, key, needs_tailf=False):
     for line in f:
         prefix, encrypted = line.split(log_prefix)
         try:
-            sys.stdout.write('{}{}\n'.format(prefix, fernet.decrypt(encrypted)))
+            if isinstance(encrypted, str):
+                encrypted = encrypted.encode('utf8')
+
+            sys.stdout.write('{}{}\n'.format(prefix, fernet.decrypt(encrypted).decode('utf8')))
             sys.stdout.flush()
         except InvalidToken:
             sys.stderr.write('Invalid crypto key\n')

@@ -3,5 +3,5 @@
 # Part of Zato - Open-source ESB, SOA, REST, APIs and Cloud Integrations in Python
 # https://zato.io
 
-from zato.enclog.enclog import cli_main
+from zato.enclog import cli_main
 cli_main()
