@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os, sys
 from setuptools import setup, find_packages
 
-version = '1.0'
+version = '1.0.2'
 
 LONG_DESCRIPTION = """
 
@@ -64,7 +64,7 @@ setup(
 
       author = 'Dariusz Suchojad',
       author_email = 'dsuch at zato.io',
-      url = 'https://github.com/zatosource/zato-labs/tree/master/enclog',
+      url = 'https://github.com/zatosource/zato-enclog',
       description = 'Encrypted logger reusable in any Python application',
       long_description = LONG_DESCRIPTION,
       platforms = ['OS Independent'],

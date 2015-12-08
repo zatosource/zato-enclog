@@ -1,4 +1,5 @@
 *.pyc
 .coverage
+dist
 enclog-env
 src/zato_enclog.egg-info
