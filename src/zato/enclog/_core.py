@@ -42,7 +42,8 @@ cli_key_help='Crypto key to decrypt data with.'
 # ################################################################################################################################
 
 class EncryptedLogFormatter(Formatter):
-    def __init__(self, key, *args, **kwargs):
+    def __init__(self, key=None, *args, **kwargs):
+        key = key or kwargs.pop('fernet_key')
         self.fernet = Fernet(key)
         return super(EncryptedLogFormatter, self).__init__(*args, **kwargs)
 
