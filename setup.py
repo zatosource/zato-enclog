@@ -14,16 +14,20 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os, sys
 from setuptools import setup, find_packages
 
-version = '1.0.2.post1'
+version = '1.0.2.post3'
 
 LONG_DESCRIPTION = """
 
-Encrypted logger which stores everything using Fernet keys (AES128). Safe to use in environments
-that cannot store Personally Identifiable Information (PII), such as HIPAA-compliant applications.
+===========
+zato-enclog
+===========
 
-Learn more about Fernet: https://cryptography.io/en/latest/fernet/
+* Encrypted logger which stores everything using Fernet keys (AES128). Safe to use in environments
+  that cannot store Personally Identifiable Information (PII), such as HIPAA-compliant applications.
 
-zato-enclog comes with a command line tool that is used to decrypt logs, including both open and tail -f functionality.
+* Comes with a command line tool that is used to decrypt logs, including both open and tail -f functionality.
+
+* Learn more about Fernet: https://cryptography.io/en/latest/fernet/
 
 ::
 
