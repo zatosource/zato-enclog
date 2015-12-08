@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os, sys
 from setuptools import setup, find_packages
 
-version = '1.0.2.post3'
+version = '1.0.3'
 
 LONG_DESCRIPTION = """
 
@@ -77,7 +77,7 @@ setup(
       license = 'BSD License',
 
       package_dir = {'':package_dir},
-      packages = find_packages('src'),
+      packages = find_packages(package_dir),
 
       namespace_packages = ['zato'],
       dependency_links = ['git+https://github.com/six8/pytailer.git#egg=tailer'],
