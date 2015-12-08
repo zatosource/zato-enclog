@@ -14,7 +14,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os, sys
 from setuptools import setup, find_packages
 
-version = '1.0.2'
+version = '1.0.2.post1'
 
 LONG_DESCRIPTION = """
 
@@ -25,29 +25,31 @@ Learn more about Fernet: https://cryptography.io/en/latest/fernet/
 
 zato-enclog comes with a command line tool that is used to decrypt logs, including both open and tail -f functionality.
 
-# stdlib
-import logging
+::
 
-# Zato
-from zato.enclog import EncryptedLogFormatter, genkey
+  # stdlib
+  import logging
 
-level = logging.INFO
-format = '%(levelname)s - %(message)s'
+  # Zato
+  from zato.enclog import EncryptedLogFormatter, genkey
 
-key = genkey()
-formatter = EncryptedLogFormatter(key, format)
+  level = logging.INFO
+  format = '%(levelname)s - %(message)s'
 
-handler = logging.StreamHandler()
-handler.setFormatter(formatter)
+  key = genkey()
+  formatter = EncryptedLogFormatter(key, format)
 
-logger = logging.getLogger('')
-logger.addHandler(handler)
-logger.setLevel(level)
+  handler = logging.StreamHandler()
+  handler.setFormatter(formatter)
 
-logger.info(b'{"user":"Jane Xi"}')
+  logger = logging.getLogger('')
+  logger.addHandler(handler)
+  logger.setLevel(level)
 
-# Shows the following
-INFO - gAAAAABWYa17oiDoSMVjF8JM9DWzB3dtEvenW9laKqgsFl4d4ksbLCkoJzTyrI3nXKYVOcC03dhJ_BwfWlBN3CdGxJZAwMmfUbUzLHkqw2JeTzdgtz0YEGU=
+  logger.info(b'{"user":"Jane Xi"}')
+
+  # Shows the following
+  INFO - gAAAAABWYa17oiDoSMVjF8JM9DWzB3dtEvenW9laKqgsFl4d4ksbLCkoJzTyrI3nXKYVOcC03dhJ_BwfWlBN3CdGxJZAwMmfUbUzLHkqw2JeTzdgtz0YEGU=
 """
 
 def parse_requirements(requirements):
