@@ -6,8 +6,10 @@ BIN_DIR=$(CURDIR)/$(ENV_NAME)/bin
 
 default: test
 
+# In case of any errors with virtualenv make sure you have virtualenv==12.0 installed (that exact one).
+
 install2:
-	virtualenv -p python2.7 $(CURDIR)/$(ENV_NAME)
+	virtualenv -p python $(CURDIR)/$(ENV_NAME)
 	$(MAKE) _install
 
 install3:
