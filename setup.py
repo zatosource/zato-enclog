@@ -23,7 +23,7 @@ zato-enclog
 ===========
 
 * Encrypted logger which stores everything using Fernet keys (AES128). Safe to use in environments
-  that cannot store Personally Identifiable Information (PII), such as HIPAA-compliant applications.
+  that cannot store Personally Identifiable Information (PII) in clear text, such as HIPAA-compliant applications.
 
 * Comes with a command line tool that is used to decrypt logs, including both open and tail -f functionality.
 
