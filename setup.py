@@ -21,13 +21,15 @@ LONG_DESCRIPTION = """
 Encrypted logger which stores everything using Fernet keys (AES128). Safe to use in environments
 that cannot store Personally Identifiable Information (PII), such as HIPAA-compliant applications.
 
-Comes with a command line tool that is used decrypt logs, including both open and tail -f functionality.
+Learn more about Fernet: https://cryptography.io/en/latest/fernet/
+
+zato-enclog comes with a command line tool that is used to decrypt logs, including both open and tail -f functionality.
 
 # stdlib
 import logging
 
 # Zato
-from enclog import EncryptedLogFormatter, genkey
+from zato.enclog import EncryptedLogFormatter, genkey
 
 level = logging.INFO
 format = '%(levelname)s - %(message)s'
