@@ -5,5 +5,5 @@ cryptography>=1.1.1
 flake8>=2.1.0
 future>=0.15.2
 nose>=1.3.3
--e git+https://github.com/six8/pytailer.git#egg=tailer
+tailer
 testfixtures>=4.6.0
