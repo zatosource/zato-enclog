@@ -5,5 +5,5 @@ cryptography>=1.1.1
 flake8>=2.1.0
 future>=0.15.2
 nose>=1.3.3
-tailer-py3>=1.0
+tailer>=0.4
 testfixtures>=4.6.0
