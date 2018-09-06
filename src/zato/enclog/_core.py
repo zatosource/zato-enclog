@@ -52,6 +52,7 @@ class EncryptedLogFormatter(Formatter):
         if isinstance(msg, str):
             msg = msg.encode('utf8')
         record.msg = '{}{}'.format(log_prefix, self.fernet.encrypt(msg).decode('utf8'))
+
         # record.getMessage() above already formats the complete message
         # using the required record.args. Once encrypted there is no use
         # for the record.args. Hence we set it to None.
@@ -60,6 +61,7 @@ class EncryptedLogFormatter(Formatter):
         # If we do not set record.args to None, we would get exceptions such as
         # "TypeError: not all arguments converted during string formatting"        
         record.args = None
+
         return super(EncryptedLogFormatter, self).format(record)
 
 # ################################################################################################################################
